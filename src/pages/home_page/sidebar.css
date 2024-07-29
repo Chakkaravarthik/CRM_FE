@@ -1,0 +1,67 @@
+/* Sidebar.css */
+.sidebar {
+    height: 100%;
+    width: 60px; /* Minimized width */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #f8f9fa;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: width 0.3s, padding 0.3s;
+    padding-top: 20px; /* Padding to position the links and logo */
+    z-index: 1000;
+    border-right: 2px solid orange;
+    display: flex;
+    flex-direction: column; /* Align children vertically */
+  }
+  
+  .sidebar.expanded {
+    width: 250px; /* Expanded width */
+  }
+  
+  .sidebar .logo {
+    width: 60px; /* Minimized logo size */
+    height: 60px;
+    border-radius: 50%; /* Make the logo round */
+    margin: 20px auto; /* Center the logo horizontally */
+    transition: width 0.3s, height 0.3s; /* Smooth transition for expansion */
+  }
+  
+  .sidebar.expanded .logo {
+    width: 50px; /* Adjust logo size on maximize */
+    height: 50px;
+  }
+  
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: grey;
+    transition: padding 0.3s, font-size 0.3s;
+  }
+  
+  .sidebar a:hover {
+    color: orange;
+  }
+  
+  .sidebar .icon {
+    font-size: 24px; /* Size of the icons */
+    min-width: 60px; /* Ensure icon area is consistent */
+    text-align: center; /* Center icon */
+    color :black
+  }
+  
+  .sidebar .text {
+    margin-left: 10px;
+    display: none; /* Hide text in minimized state */
+    font-size: 18px;
+    transition: display 0.3s;
+    color:black;
+  }
+  
+  .sidebar.expanded .text {
+    display: inline-block; /* Show text in expanded state */
+  }
+  
