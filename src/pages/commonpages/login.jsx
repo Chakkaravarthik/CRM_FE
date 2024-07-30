@@ -57,7 +57,7 @@ const LoginForm = () => {
               Login
             </button>
             <button type="button" className="btn btn-link w-100" style={{  backgroundColor: 'grey' }}>
-              <Link style={{color: 'white' }} to='/register'>Register</Link>
+              <Link  to='/register'>Register</Link> <Link  to='/forgetpassword'>Forget Password</Link>
             </button>
           </form>
         </div>

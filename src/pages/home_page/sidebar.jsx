@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import '../home_page/sidebar.css'; // Import the CSS file for styling
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const Navigate = useNavigate();
+
+  const logout = () =>{
+    Navigate('/login')
+  }
 
   useEffect(() => {
     const handleScroll = (event) => {
@@ -54,6 +60,8 @@ const Sidebar = () => {
         <span className="icon"><i className="bi bi-person-circle"></i></span>
         <span className="text">Admin</span>
       </a>
+
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO9xMAd-PgVcWAQTQLxBcSUexZYm_q5-foLUpUuVjEWcWDzdKf3RJisrhiZ6il0kZz1ps&usqp=CAU" alt="Logo" onClick={logout} className="logo" style={{ width: '30px', height: '30px'}}/>
     </div>
   );
 };

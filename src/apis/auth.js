@@ -35,5 +35,54 @@ const userlogin = async (userdata)=>{
     }
 }
 
+// forget password email sending
+ const forgetpassword = async (email) =>{
+    try{
+        const res = await fetch(`${URL}/forgetpassword`,{
+            method:"post",
+            body: JSON.stringify(email),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        })
+        return await res.json();
+    }catch(e){
+        console.log(e.message)
+    }
+ }
+ 
+ // resetting password 
 
-export { usersignup, userlogin};
+ const resetpassword = async ({token, password}) =>{
+    try{
+        const res = await fetch(`${URL}/resetpassword`,{
+            method:"post",
+            body: JSON.stringify({token,password}),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        })
+        return await res.json();
+    }catch(e){
+        console.log(e.message)
+    }
+ }
+
+ //verify password 
+
+ const verifypassword = async ({token})=>{
+    try{
+        const res = await fetch(`${URL}/verifypassword`,{
+            method:"post",
+            body: JSON.stringify({token}),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        })
+        return await res.json();
+    }catch(e){
+        console.log(e.message)
+    }
+ }
+
+export { usersignup, userlogin, forgetpassword, resetpassword, verifypassword};
