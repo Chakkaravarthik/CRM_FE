@@ -85,4 +85,17 @@ const userlogin = async (userdata)=>{
     }
  }
 
-export { usersignup, userlogin, forgetpassword, resetpassword, verifypassword};
+ // customer data api hit
+
+ const customerget = async () =>{
+    try{
+        const res = await fetch(`${URL}/customer-list`)
+        console.log('get api hit')
+        return await res.json();
+        
+    }catch(e){
+        console.log(e.message)
+    }
+ }
+
+export { usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget};

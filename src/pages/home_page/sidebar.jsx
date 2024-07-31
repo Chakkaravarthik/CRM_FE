@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../home_page/sidebar.css'; // Import the CSS file for styling
 import { useNavigate } from 'react-router-dom';
+import Customerlist from '../modules/customer/customerlist';
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [activecomponent, setactivecomponent] = useState();
   const Navigate = useNavigate();
 
   const logout = () =>{
@@ -30,7 +32,13 @@ const Sidebar = () => {
   const handleMouseEnter = () => setIsExpanded(true);
   const handleMouseLeave = () => setIsExpanded(false);
 
+  const handleclickcomponent = (component)=>(e)=>{
+    e.preventDefault();
+    setactivecomponent(component)
+  }
+
   return (
+    <>
     <div
       className={`sidebar ${isExpanded ? 'expanded' : ''}`}
       onMouseEnter={handleMouseEnter}
@@ -40,7 +48,7 @@ const Sidebar = () => {
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO9xMAd-PgVcWAQTQLxBcSUexZYm_q5-foLUpUuVjEWcWDzdKf3RJisrhiZ6il0kZz1ps&usqp=CAU" alt="Logo" className="logo" style={{ width: '50px', height: '50px' }}/>
 
       {/* Navigation links */}
-      <a href="/" className="d-flex align-items-center">
+      <a href='/'  onClick={handleclickcomponent("customerList")} className="d-flex align-items-center" >
         <span className="icon"><i className="bi bi-house"></i></span>
         <span className="text">Customer</span>
       </a>
@@ -63,6 +71,11 @@ const Sidebar = () => {
 
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO9xMAd-PgVcWAQTQLxBcSUexZYm_q5-foLUpUuVjEWcWDzdKf3RJisrhiZ6il0kZz1ps&usqp=CAU" alt="Logo" onClick={logout} className="logo" style={{ width: '30px', height: '30px'}}/>
     </div>
+    <div>
+    {activecomponent === 'customerList' && <Customerlist />}
+    </div>
+    </>
+
   );
 };
 

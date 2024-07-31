@@ -6,6 +6,7 @@ import Sidebar from './pages/home_page/sidebar';
 import ForgotPassword from './pages/commonpages/forgetpassword/forgetpassword';
 import ResetPassword from './pages/commonpages/resetpassword/resetpassword';
 import CustomerForm from './pages/modules/customer/customercreation';
+import Customerlist from './pages/modules/customer/customerlist';
 
 const APP = ()=>{
   return(
