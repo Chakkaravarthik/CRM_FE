@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { customercreation } from '../../../apis/auth';
 
 const CustomerForm = () => {
   const [customerData, setCustomerData] = useState({
@@ -56,14 +57,8 @@ const CustomerForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    //   const response = await axios.post('/api/customers', customerData);
-    //   console.log('Customer saved:', response.data);
-    //   // Reset form or handle success state here
-    // } catch (error) {
-    //   console.error('Error saving customer:', error);
-    //   // Handle error state here
-    // }
+    const data = await customercreation(customerData);
+  
   };
 
   return (

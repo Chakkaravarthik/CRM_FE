@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { customerget } from '../../../apis/auth';
+import '../customer/customerlist.css'
+import { useNavigate } from 'react-router-dom';
+
 
 
 const Customerlist = () => {
   const [customers, setCustomers] = useState([]);
+  const Navigate = useNavigate();
 
   useEffect(()=>{
     
@@ -22,11 +26,20 @@ const Customerlist = () => {
     // alert(`Edit customer with ID: ${customerId}`);
   };
 
+  const handlecustomerform = ()=> (e) =>{
+    
+    Navigate('/cutsomerform')
+  }
+
   return (
     <div className="container-fluid" style={{padding:"0 0 0 8rem"}}>
-      <h1 style={{ color: 'orange' }}>Customer List</h1>
-      <CustomerLista  customers={customers} onEdit={handleEditClick} />
-    </div>
+  <div className='headbtn'>
+    <div><h1 style={{ color: 'orange' }}>Customer List</h1></div>
+    <div><button style={{ border: 'none', background: 'orange', padding: '10px 20px' }} onClick={handlecustomerform()}>Create Customer</button></div>
+  </div>
+  <CustomerLista customers={customers} onEdit={handleEditClick} />
+  </div>
+
   );
 };
 

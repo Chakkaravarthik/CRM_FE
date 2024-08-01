@@ -1,0 +1,21 @@
+.headbtn {
+    display: flex;                   /* Use Flexbox for layout */
+    justify-content: space-between;  /* Space between items */
+    align-items: center;             /* Center items vertically */
+    width: 100%;                     /* Full width to prevent overflow */
+    padding: 10px;                   /* Optional padding */
+    box-sizing: border-box;          /* Include padding in the width calculation */
+  }
+  
+  .headbtn h1 {
+    margin: 0;                       /* Remove default margin */
+  }
+  
+  .headbtn button {
+    padding: 10px 20px;              /* Adequate padding for the button */
+    border: none;                    /* Remove border */
+    background-color: orange;        /* Set background color */
+    color: white;                    /* Text color */
+    cursor: pointer;                 /* Pointer cursor on hover */
+  }
+  

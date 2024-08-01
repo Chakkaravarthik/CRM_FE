@@ -17,7 +17,7 @@ const APP = ()=>{
           <Route path='/home' element={<Sidebar/>}/>
           <Route path='/forgetpassword' element={<ForgotPassword/>}/>
           <Route path='/resetpassword' element={<ResetPassword/>}/>
-          <Route path='/customerform' element={<CustomerForm/>}/>
+          <Route path='/cutsomerform'  element={<CustomerForm/>}/>
         </Routes>
     </BrowserRouter>
     

@@ -98,4 +98,22 @@ const userlogin = async (userdata)=>{
     }
  }
 
-export { usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget};
+
+ //custoemr creation api
+
+ const customercreation = async (customerdata) =>{
+    try{
+        const res = await fetch(`${URL}/customer-list`,{
+            method: "POST",
+            body: JSON.stringify(customerdata),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        })
+        return await res.json();
+    }catch(e){
+        console.log(e.message)
+    }
+ }
+
+export { usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation};
