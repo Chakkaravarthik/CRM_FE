@@ -23,7 +23,7 @@ const Customerlist = () => {
 
   const handleEditClick = (customerId) => {
     // Implement edit functionality here
-    // alert(`Edit customer with ID: ${customerId}`);
+    alert(`Edit customer with ID: ${customerId}`);
   };
 
   const handlecustomerform = ()=> (e) =>{
