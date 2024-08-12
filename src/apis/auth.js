@@ -116,4 +116,27 @@ const userlogin = async (userdata)=>{
     }
  }
 
-export { usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation};
+ const getitems= async()=>{
+    try{
+        const res = await fetch(`${URL}/itemlist`)
+        return await res.json();
+    }catch(e){
+        console.log(e)
+    }
+ }
+
+ const addpurchasedata = async(formdata)=>{
+    try{
+        const res = await fetch(`${URL}/purchase`,{
+            method:'post',
+            body:JSON.stringify(formdata),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        })
+        return await res.json();
+    }catch(e){
+        console.log(e)
+     }
+ }
+export { usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation,getitems, addpurchasedata};
