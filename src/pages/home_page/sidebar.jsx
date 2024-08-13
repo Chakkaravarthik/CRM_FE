@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../home_page/sidebar.css'; // Import the CSS file for styling
 import { useNavigate } from 'react-router-dom';
 import Customerlist from '../modules/customer/customerlist';
-import Purchase from '../modules/sales/purchase';
+import {PurchaseList} from '../modules/sales/purchase';
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -43,7 +43,7 @@ const Sidebar = () => {
       case 'customerList':
         return <Customerlist />;
       case 'purchase':
-        return <Purchase />;
+        return <PurchaseList />;
       default:
         return null;
     }

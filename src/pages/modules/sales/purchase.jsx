@@ -1,7 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { addpurchasedata, customerget, getitems } from '../../../apis/auth';
+import { addpurchasedata, customerget, getitems, getpurchase } from '../../../apis/auth';
+import {useNavigate} from 'react-router-dom';
 
-const Purchase = () => {
+
+const PurchaseList = () => {
+  const [purchases, setpurchases]= useState([]);
+  const Navigate = useNavigate();
+
+
+useEffect(()=>{
+ const dataload =async ()=>{
+  const data = await getpurchase();
+  setpurchases(data);
+ }
+
+ dataload();
+},[])
+
+
+const handlepurchaseform =()=>(e)=>{
+  Navigate('/purchaseform')
+}
+
+  return (
+    <div className="container mt-5" style={{ maxWidth: '900px' }}>
+      <div className="card p-4" style={{ backgroundColor: '#f7f7f7', border: 'none' }}>
+        <h3 className="mb-4" style={{ color: '#ff7f00' }}>Purchase List</h3>
+        <button style={{ border: 'none', background: 'orange', padding: '10px 20px' }} onClick={handlepurchaseform()}>Click here to add Purchase data</button>
+        <table className="table table-striped">
+          <thead style={{ backgroundColor: '#ff7f00', color: '#fff' }}>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Customer Name</th>
+              <th scope="col">Date</th>
+              <th scope="col">Item</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Price</th>
+              <th scope="col">Total Amount</th>
+              <th scope="col">Payment Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            {purchases.map((purchase, index) => (
+              <tr key={purchase.purchase_id} style={{ color: '#333' }}>
+                <th scope="row">{index + 1}</th>
+                <td>{purchase.CustomerName}</td>
+                <td>{new Date(purchase.date).toLocaleDateString()}</td>
+                <td>{purchase.items.name}</td>
+                <td>{purchase.items.quantity}</td>
+                <td>${purchase.items.price.toFixed(2)}</td>
+                <td>${purchase.total_amount.toFixed(2)}</td>
+                <td>{purchase.payment_method}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+
+
+
+const Purchaseform = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedCustomer, setSelectedCustomer] = useState('');
   const [quantity, setQuantity] = useState(1);
@@ -10,6 +72,7 @@ const Purchase = () => {
   const [customers, setCustomers] = useState([]);
   const [items, setItems] = useState([]);
   const [formdata, setFormData] = useState({});
+  const Navigate = useNavigate();
 
   useEffect(() => {
     const getitem = async () => {
@@ -65,12 +128,17 @@ const Purchase = () => {
       totalAmount,
       paymentType,
       selectedCustomer,
+      quantity,
     };
-    setFormData(data);
+    
 
     // Make the API call to submit the form
     try {
-      await addpurchasedata(data);
+      const res = await addpurchasedata(data);
+      console.log(res)
+      if(res.code==1){
+       Navigate('/purchaselist')
+      }
       console.log('Purchase data submitted:', data);
     } catch (error) {
       console.error('Error submitting purchase data:', error);
@@ -174,4 +242,4 @@ const Purchase = () => {
   );
 };
 
-export default Purchase;
+export { PurchaseList, Purchaseform};

@@ -139,4 +139,13 @@ const userlogin = async (userdata)=>{
         console.log(e)
      }
  }
-export { usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation,getitems, addpurchasedata};
+
+ const getpurchase = async () =>{
+    try{
+        const res = await fetch(`${URL}/purchase`)
+        return await res.json();
+    }catch(e){
+        console.log(e)
+    }
+ }
+export { usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation,getitems, addpurchasedata, getpurchase};
