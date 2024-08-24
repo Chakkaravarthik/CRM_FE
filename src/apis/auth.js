@@ -148,4 +148,39 @@ const userlogin = async (userdata)=>{
         console.log(e)
     }
  }
-export { usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation,getitems, addpurchasedata, getpurchase};
+
+// api for purchase feedback
+
+const checktokenforfeedback = async (token)=>{
+    try{
+        const res = await fetch(`${URL}/purchasefeedback`,{
+            method:'post',
+            body:JSON.stringify(token),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        })
+        return await res.json();
+    }catch(e){
+        console.log(e.message);
+    }
+}
+
+//feedback update api
+
+const updatefeedback = async (data)=>{
+    try{
+        const res = await fetch(`${URL}/purchasefeedbackupdate`,{
+            method:'post',
+            body:JSON.stringify(data),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        })
+        return await res.json();
+    }catch(e){
+        console.log(e.message);
+    }
+}
+
+export { updatefeedback, checktokenforfeedback, usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation,getitems, addpurchasedata, getpurchase};

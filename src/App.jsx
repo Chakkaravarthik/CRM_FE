@@ -7,6 +7,7 @@ import ForgotPassword from './pages/commonpages/forgetpassword/forgetpassword';
 import ResetPassword from './pages/commonpages/resetpassword/resetpassword';
 import CustomerForm from './pages/modules/customer/customercreation';
 import { Purchaseform, PurchaseList } from './pages/modules/sales/purchase';
+import Feedback from './pages/modules/sales/purchasefeedback';
 
 const APP = ()=>{
   return(
@@ -20,6 +21,8 @@ const APP = ()=>{
           <Route path='/cutsomerform'  element={<CustomerForm/>}/>
           <Route path='/purchaseform'  element={<Purchaseform/>}/>
           <Route path='/purchaselist'  element={<PurchaseList/>}/>
+          <Route path='/purchasefeedback'  element={<Feedback/>}/>
+          
         </Routes>
     </BrowserRouter>
     
