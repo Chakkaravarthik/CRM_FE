@@ -183,4 +183,52 @@ const updatefeedback = async (data)=>{
     }
 }
 
-export { updatefeedback, checktokenforfeedback, usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation,getitems, addpurchasedata, getpurchase};
+const offerzonedata= async (customerdata)=>{
+    try{
+        const res = await fetch(`${URL}/offerzone`,{
+            method:"post",
+            body:JSON.stringify(customerdata),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        })
+        return await res.json();
+    }catch(e){
+        console.log(e)
+    }
+}
+
+const fetchEvents =async ()=>{
+    try{
+        const res = await fetch(`${URL}/offerzone`)
+        return await res.json();
+    }catch(e){
+        console.log(e)
+    }
+}
+
+const sendEmail = async (emaildata) =>{
+    try{
+        const res = await fetch(`${URL}/bulkemail`,{
+            method:'post',
+            body:JSON.stringify(emaildata),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        })
+        return await res.json();
+    }catch(e){
+        console.log(e)
+    }
+}
+
+const feedbackget = async() =>{
+    try{
+        const res = await fetch(`${URL}/purchasefeedbackupdate`)
+        return await res.json();
+    }catch(e){
+        console.log(e)
+    }
+}
+
+export { feedbackget, sendEmail, fetchEvents,offerzonedata , updatefeedback, checktokenforfeedback, usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation,getitems, addpurchasedata, getpurchase};

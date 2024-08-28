@@ -27,7 +27,7 @@ const handlepurchaseform =()=>(e)=>{
       <div className="card p-4" style={{ backgroundColor: '#f7f7f7', border: 'none' }}>
         <h3 className="mb-4" style={{ color: '#ff7f00' }}>Purchase List</h3>
         <button style={{ border: 'none', background: 'orange', padding: '10px 20px' }} onClick={handlepurchaseform()}>Click here to add Purchase data</button>
-        <table className="table table-striped">
+        <table className="table table-hover">
           <thead style={{ backgroundColor: '#ff7f00', color: '#fff' }}>
             <tr>
               <th scope="col">#</th>

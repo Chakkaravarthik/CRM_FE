@@ -44,6 +44,9 @@ const Feedback = () =>{
             const res = await updatefeedback({token,feedback});
             if(res.code==1){
                 console.log('feedback submitted')
+                setTimeout(() => {
+                  Navigate("/home")
+                }, 1000);
             }else{
                 console.log('feed not')
             }

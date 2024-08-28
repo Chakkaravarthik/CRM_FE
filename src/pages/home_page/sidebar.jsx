@@ -3,6 +3,8 @@ import '../home_page/sidebar.css'; // Import the CSS file for styling
 import { useNavigate } from 'react-router-dom';
 import Customerlist from '../modules/customer/customerlist';
 import {PurchaseList} from '../modules/sales/purchase';
+import Feedbacklist from '../modules/feedback/feedbacklist';
+import EmailSender from '../offsers/emailsending';
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -44,6 +46,10 @@ const Sidebar = () => {
         return <Customerlist />;
       case 'purchase':
         return <PurchaseList />;
+        case 'feedback':
+          return <Feedbacklist />
+        case 'offerzone':
+          return <EmailSender/>
       default:
         return null;
     }
@@ -85,17 +91,21 @@ const Sidebar = () => {
           </span>
           <span className="text">Purchase</span>
         </a>
-        <a href="/" className="d-flex align-items-center">
+        <a href="/" 
+        onClick={handleClickComponent('feedback')}
+        className="d-flex align-items-center">
           <span className="icon">
             <i className="bi bi-envelope-paper-fill" style={{ width: '5px', height: '5px' }}></i>
           </span>
           <span className="text">Feedback</span>
         </a>
-        <a href="/" className="d-flex align-items-center">
+        <a href="/" 
+        onClick={handleClickComponent('offerzone')}
+        className="d-flex align-items-center">
           <span className="icon">
             <i className="bi bi-envelope"></i>
           </span>
-          <span className="text">Marketing</span>
+          <span className="text">Offser Zone</span>
         </a>
         <a href="/" className="d-flex align-items-center">
           <span className="icon">
