@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../home_page/sidebar.css'; // Import the CSS file for styling
-import { useNavigate } from 'react-router-dom';
 import Customerlist from '../modules/customer/customerlist';
-import {PurchaseList} from '../modules/sales/purchase';
+import { PurchaseList } from '../modules/sales/purchase';
 import Feedbacklist from '../modules/feedback/feedbacklist';
 import EmailSender from '../offsers/emailsending';
 
@@ -10,10 +10,7 @@ const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeComponent, setActiveComponent] = useState(null);
   const navigate = useNavigate();
-
-  const logout = () => {
-    navigate('/login');
-  };
+  const location = useLocation(); // To track current path for sidebar active state
 
   useEffect(() => {
     const handleScroll = (event) => {
@@ -27,33 +24,42 @@ const Sidebar = () => {
     const sidebar = document.querySelector('.sidebar');
     sidebar.addEventListener('scroll', handleScroll);
 
+    // Ensure the check runs every time the authentication status changes
+    if (!Boolean(localStorage.getItem("IsAuthenticated"))) {
+      navigate('/login');
+    }
+
     return () => {
       sidebar.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [navigate]);
 
   const handleMouseEnter = () => setIsExpanded(true);
   const handleMouseLeave = () => setIsExpanded(false);
 
-  const handleClickComponent = (component) => (e) => {
-    e.preventDefault();
-    setActiveComponent(component);
+  const handleNavigation = (path) => (e) => {
+    e.preventDefault(); // Prevent default anchor behavior
+    navigate(path);
   };
 
   const renderActiveComponent = () => {
-    switch (activeComponent) {
-      case 'customerList':
+    switch (location.pathname) {
+      case '/customerlist':
         return <Customerlist />;
-      case 'purchase':
+      case '/purchaselist':
         return <PurchaseList />;
-        case 'feedback':
-          return <Feedbacklist />
-        case 'offerzone':
-          return <EmailSender/>
+      case '/feedback':
+        return <Feedbacklist />;
+      case '/offerzone':
+        return <EmailSender />;
       default:
         return null;
     }
   };
+
+  const logout = ()=>{
+    localStorage.removeItem("IsAuthenticated")
+  }
 
   return (
     <>
@@ -71,41 +77,29 @@ const Sidebar = () => {
         />
 
         {/* Navigation links */}
-        <a
-          href="/"
-          onClick={handleClickComponent('customerList')}
-          className="d-flex align-items-center"
-        >
+        <a href="/customerlist"  className="d-flex align-items-center">
           <span className="icon">
             <i className="bi bi-house"></i>
           </span>
           <span className="text">Customer</span>
         </a>
-        <a
-          href="/"
-          onClick={handleClickComponent('purchase')}
-          className="d-flex align-items-center"
-        >
+        <a href="/purchaselist" onClick={handleNavigation('/purchaselist')} className="d-flex align-items-center">
           <span className="icon">
             <i className="bi bi-info-circle"></i>
           </span>
           <span className="text">Purchase</span>
         </a>
-        <a href="/" 
-        onClick={handleClickComponent('feedback')}
-        className="d-flex align-items-center">
+        <a href="/feedback" onClick={handleNavigation('/feedback')} className="d-flex align-items-center">
           <span className="icon">
             <i className="bi bi-envelope-paper-fill" style={{ width: '5px', height: '5px' }}></i>
           </span>
           <span className="text">Feedback</span>
         </a>
-        <a href="/" 
-        onClick={handleClickComponent('offerzone')}
-        className="d-flex align-items-center">
+        <a href="/offerzone" onClick={handleNavigation('/offerzone')} className="d-flex align-items-center">
           <span className="icon">
             <i className="bi bi-envelope"></i>
           </span>
-          <span className="text">Offser Zone</span>
+          <span className="text">Offer Zone</span>
         </a>
         <a href="/" className="d-flex align-items-center">
           <span className="icon">
@@ -116,15 +110,13 @@ const Sidebar = () => {
 
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO9xMAd-PgVcWAQTQLxBcSUexZYm_q5-foLUpUuVjEWcWDzdKf3RJisrhiZ6il0kZz1ps&usqp=CAU"
-          alt="Logo"
+          alt="Logout"
           onClick={logout}
           className="logo"
           style={{ width: '30px', height: '30px' }}
         />
       </div>
-      <div>
-        {renderActiveComponent()}
-      </div>
+      
     </>
   );
 };

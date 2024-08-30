@@ -98,6 +98,24 @@ const userlogin = async (userdata)=>{
     }
  }
 
+ //customer particular
+
+ const customerget1 = async (token) =>{
+    try{
+        const res = await fetch(`${URL}/customer-list`,{
+            method:'post',
+            body:JSON.stringify(token),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        })
+        return await res.json();
+        
+    }catch(e){
+        console.log(e.message)
+    }
+ }
+
 
  //custoemr creation api
 
@@ -231,4 +249,4 @@ const feedbackget = async() =>{
     }
 }
 
-export { feedbackget, sendEmail, fetchEvents,offerzonedata , updatefeedback, checktokenforfeedback, usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation,getitems, addpurchasedata, getpurchase};
+export { customerget1, feedbackget, sendEmail, fetchEvents,offerzonedata , updatefeedback, checktokenforfeedback, usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation,getitems, addpurchasedata, getpurchase};
