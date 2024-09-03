@@ -90,7 +90,6 @@ const userlogin = async (userdata)=>{
  const customerget = async () =>{
     try{
         const res = await fetch(`${URL}/customer-list`)
-        console.log('get api hit')
         return await res.json();
         
     }catch(e){

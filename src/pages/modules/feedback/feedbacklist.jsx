@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const feedbacklist = () => {
+const Feedbacklist = () => {
   const [feedback, setfeedback] = useState([]);
   const Navigate = useNavigate();
 
@@ -75,4 +75,4 @@ const Customer = ({ f, onEdit }) => {
   );
 };
 
-export default feedbacklist;
+export default Feedbacklist;

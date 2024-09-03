@@ -10,6 +10,9 @@ import { Purchaseform, PurchaseList } from './pages/modules/sales/purchase';
 import Feedback from './pages/modules/sales/purchasefeedback';
 import Customerlist from './pages/modules/customer/customerlist';
 import CustomerDashboard from './pages/dashboard/customerdashboard';
+import EmailSender from './pages/offsers/emailsending';
+import Feedbacklist from './pages/modules/feedback/feedbacklist';
+import Dashboard from './pages/dashboard/generaldashboard';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(Boolean(localStorage.getItem("IsAuthenticated")));
@@ -36,9 +39,11 @@ const App = () => {
             <Route path="/customerform" element={<CustomerForm />} />
             <Route path="/purchaseform" element={<Purchaseform />} />
             <Route path="/purchaselist" element={<PurchaseList />} />
-            <Route path="/purchasefeedback" element={<Feedback />} />
+            <Route path="/purchasefeedback" element={<Feedbacklist />} />
             <Route path="/customerlist" element={<Customerlist />} />
             <Route path="/" element={<CustomerDashboard/>} /> 
+            <Route path="/emailsender" element={<EmailSender />} />
+            <Route path="/dash" element={<Dashboard />} />
           </>
         ) : (
           <Route path="*" element={<Navigate to="/login" />} />  

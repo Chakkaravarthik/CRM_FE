@@ -48,7 +48,7 @@ const Sidebar = () => {
         return <Customerlist />;
       case '/purchaselist':
         return <PurchaseList />;
-      case '/feedback':
+      case '/purchasefeedback':
         return <Feedbacklist />;
       case '/offerzone':
         return <EmailSender />;
@@ -89,31 +89,24 @@ const Sidebar = () => {
           </span>
           <span className="text">Purchase</span>
         </a>
-        <a href="/feedback" onClick={handleNavigation('/feedback')} className="d-flex align-items-center">
+        <a href="/purchasefeedback" onClick={handleNavigation('/purchasefeedback')} className="d-flex align-items-center">
           <span className="icon">
             <i className="bi bi-envelope-paper-fill" style={{ width: '5px', height: '5px' }}></i>
           </span>
           <span className="text">Feedback</span>
         </a>
-        <a href="/offerzone" onClick={handleNavigation('/offerzone')} className="d-flex align-items-center">
+        <a href="/emailsender" onClick={handleNavigation('/emailsender')} className="d-flex align-items-center">
           <span className="icon">
             <i className="bi bi-envelope"></i>
           </span>
           <span className="text">Offer Zone</span>
         </a>
-        <a href="/" className="d-flex align-items-center">
-          <span className="icon">
-            <i className="bi bi-person-circle"></i>
-          </span>
-          <span className="text">Admin</span>
-        </a>
-
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO9xMAd-PgVcWAQTQLxBcSUexZYm_q5-foLUpUuVjEWcWDzdKf3RJisrhiZ6il0kZz1ps&usqp=CAU"
           alt="Logout"
           onClick={logout}
           className="logo"
-          style={{ width: '30px', height: '30px' }}
+          style={{ width: '40px', height: '40px' }}
         />
       </div>
       
