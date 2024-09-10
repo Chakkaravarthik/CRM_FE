@@ -59,6 +59,7 @@ const Sidebar = () => {
 
   const logout = ()=>{
     localStorage.removeItem("IsAuthenticated")
+    navigate('/login')
   }
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { customerget1 } from '../../apis/auth';
+import { customerget1, updatecustomer } from '../../apis/auth';
 
 
 const CustomerDashboard = () => {
@@ -13,18 +13,21 @@ const CustomerDashboard = () => {
     
    const customerdata = async ()=>{
             const res = await customerget1({token:token});
-            const data = res.singlecustomerobj
+            const data = res.singleCustomerObj
             setCustomer(data);
-            console.log(data)
  } 
     
 
     customerdata();
   }, []);
 
-  const handleEdit = () => {
-    setCustomer(editedCustomer);
-    setShowEditModal(false);
+  const handleEdit = async () => {
+    console.log(editedCustomer)
+    const dataupdate = await updatecustomer({editedCustomer,type:"edit"});
+    if(dataupdate.code==1){
+      setShowEditModal(false);
+      setCustomer(dataupdate.customer)
+    }
   };
 
   const handleInputChange = (e) => {
@@ -49,12 +52,14 @@ const CustomerDashboard = () => {
                   <dd className="col-sm-9">{customer.email}</dd>
                   <dt className="col-sm-3">Phone</dt>
                   <dd className="col-sm-9">{customer.phone}</dd>
-                  {/* <dt className="col-sm-3">Address</dt>
-                  <dd className="col-sm-9">{customer.address}</dd> */}
+                  <dt className="col-sm-3">Address</dt>
+                  <dd className="col-sm-9">{customer.address.city}</dd> 
                 </dl>
                 <button
                   className="btn btn-warning"
-                  onClick={() => setShowEditModal(true)}
+                  onClick={() => {setShowEditModal(true)
+                    setEditedCustomer(customer)
+                  }}
                 >
                   Edit
                 </button>
@@ -137,7 +142,7 @@ const CustomerDashboard = () => {
                               className="form-control"
                               id="address"
                               name="address"
-                              value={editedCustomer.address}
+                              value={editedCustomer.address.city}
                               onChange={handleInputChange}
                             />
                           </div>

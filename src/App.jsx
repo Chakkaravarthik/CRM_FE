@@ -13,16 +13,31 @@ import CustomerDashboard from './pages/dashboard/customerdashboard';
 import EmailSender from './pages/offsers/emailsending';
 import Feedbacklist from './pages/modules/feedback/feedbacklist';
 import Dashboard from './pages/dashboard/generaldashboard';
+import { jwtDecode } from "jwt-decode"
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(Boolean(localStorage.getItem("IsAuthenticated")));
+  const [IsAdmin, setIsAdmin]= useState(false)
+  
 
   // Update authentication status if it changes in localStorage
   useEffect(() => {
     const checkAuth = () => setIsAuthenticated(Boolean(localStorage.getItem("IsAuthenticated")));
     window.addEventListener('storage', checkAuth);
     return () => window.removeEventListener('storage', checkAuth);
+
   }, []);
+
+  useEffect(()=>{
+    const usertoken = localStorage.getItem("UserToken");
+    if(usertoken){
+      const userdetails = jwtDecode(usertoken);
+      if(userdetails.role=="admin"){
+        setIsAdmin(true);
+      }
+    }
+    
+  },[])
 
   return (
     <BrowserRouter>
@@ -32,18 +47,26 @@ const App = () => {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/forgetpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/purchasefeedbackcustomer" element={<Feedback />} />
+        <Route path="/clientdash" element={<CustomerDashboard/>} />
 
-        {/* Protected routes */}
         {isAuthenticated ? (
           <>
-            <Route path="/customerform" element={<CustomerForm />} />
-            <Route path="/purchaseform" element={<Purchaseform />} />
-            <Route path="/purchaselist" element={<PurchaseList />} />
-            <Route path="/purchasefeedback" element={<Feedbacklist />} />
-            <Route path="/customerlist" element={<Customerlist />} />
-            <Route path="/" element={<CustomerDashboard/>} /> 
-            <Route path="/emailsender" element={<EmailSender />} />
-            <Route path="/dash" element={<Dashboard />} />
+          {IsAdmin && <CustomerDashboard/> }
+            {IsAdmin ? (
+              <>
+              <Route path="/customerform" element={<CustomerForm />} />
+              <Route path="/purchaseform" element={<Purchaseform />} />
+              <Route path="/purchaselist" element={<PurchaseList />} />
+              <Route path="/purchasefeedback" element={<Feedbacklist />} />
+              <Route path="/customerlist" element={<Customerlist />} />
+              <Route path="/emailsender" element={<EmailSender />} />
+              <Route path="/dash" element={<Dashboard />} />
+              </>
+            ) : (
+              <Route path="*" element={<Navigate to="/clientdash"/>} />
+            )}
+            
           </>
         ) : (
           <Route path="*" element={<Navigate to="/login" />} />  

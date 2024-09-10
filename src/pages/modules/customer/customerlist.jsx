@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { customerget, offerzonedata } from '../../../apis/auth';
 import '../customer/customerlist.css';
 import { useNavigate } from 'react-router-dom';
+import CustomerForm from './customercreation';
 
 const Customerlist = () => {
   const [customers, setCustomers] = useState([]);
@@ -10,6 +11,9 @@ const Customerlist = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
+  const [showEditModel, setShowEditModel] = useState(false);
+  const [customerdata, setCustomerData]= useState([...customers])
+  
 
   useEffect(() => {
     const getCustomer = async () => {
@@ -28,7 +32,10 @@ const Customerlist = () => {
   };
 
   const handleEditClick = (customerId) => {
-    alert(`Edit customer with ID: ${customerId}`);
+    const selectedCustomer = customers.find((customer) => customer.id === customerId);
+    setCustomerData(selectedCustomer); // Update state with single customer object
+    setShowEditModel(true);
+    
   };
 
   const handleCustomerForm = () => {
@@ -107,6 +114,9 @@ const Customerlist = () => {
         onSelect={handleSelectCustomer}
         selectedCustomers={selectedCustomers}
       />
+
+      {showEditModel && <CustomerForm customerdata={customerdata} setShowEditModel={setShowEditModel}/>}
+
     </div>
   );
 };
@@ -178,5 +188,6 @@ const Customer = ({ customer, onEdit, isSelected, onSelect }) => {
     </tr>
   );
 };
+
 
 export default Customerlist;

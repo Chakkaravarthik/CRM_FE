@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { customercreation } from '../../../apis/auth';
+import { customercreation, updatecustomer } from '../../../apis/auth';
 
-const CustomerForm = () => {
-  const [customerData, setCustomerData] = useState({
+const CustomerForm = ({customerdata, setShowEditModel,}) => {
+  console.log(customerdata)
+  const [customerData, setCustomerData] = useState(customerdata || {
     name: '',
     email: '',
     phone: '',
@@ -24,6 +25,7 @@ const CustomerForm = () => {
       mail: false,
     },
   });
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,8 +59,16 @@ const CustomerForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await customercreation(customerData);
-  
+    if(customerData.id){
+      console.log(customerData);
+      const data1= await updatecustomer({editedCustomer:customerData,type:"edit"});
+      if(data1.code==1){
+        setShowEditModel(false)
+      }
+    }else{
+      const data = await customercreation(customerData);
+    }
+    
   };
 
   return (
@@ -210,40 +220,6 @@ const CustomerForm = () => {
           onChange={(e) => handleNestedChange(e, 'textile_preferences')}
           style={{ borderColor: 'grey' }}
         />
-      </div>
-      <h3 className="mt-4" style={{ color: 'orange' }}>Contact Preferences</h3>
-      <div className="form-check">
-        <input
-          type="checkbox"
-          className="form-check-input"
-          id="contact_email"
-          name="email"
-          checked={customerData.contact_preferences.email}
-          onChange={handleCheckboxChange}
-        />
-        <label className="form-check-label" htmlFor="contact_email">Email</label>
-      </div>
-      <div className="form-check">
-        <input
-          type="checkbox"
-          className="form-check-input"
-          id="contact_sms"
-          name="sms"
-          checked={customerData.contact_preferences.sms}
-          onChange={handleCheckboxChange}
-        />
-        <label className="form-check-label" htmlFor="contact_sms">SMS</label>
-      </div>
-      <div className="form-check">
-        <input
-          type="checkbox"
-          className="form-check-input"
-          id="contact_mail"
-          name="mail"
-          checked={customerData.contact_preferences.mail}
-          onChange={handleCheckboxChange}
-        />
-        <label className="form-check-label" htmlFor="contact_mail">Mail</label>
       </div>
       <button type="submit" className="btn btn-primary mt-4" style={{ backgroundColor: 'orange', borderColor: 'grey' }}>Save Customer</button>
     </form>

@@ -248,4 +248,22 @@ const feedbackget = async() =>{
     }
 }
 
-export { customerget1, feedbackget, sendEmail, fetchEvents,offerzonedata , updatefeedback, checktokenforfeedback, usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation,getitems, addpurchasedata, getpurchase};
+
+const updatecustomer = async(data)=>{
+    try{
+        const res = await fetch(`${URL}/customer-list`,{
+            method:"put",
+            body:JSON.stringify(data),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        })
+        return await res.json();
+    }catch(e){
+        console.log(e.message);
+    }
+}
+
+
+
+export { updatecustomer, customerget1, feedbackget, sendEmail, fetchEvents,offerzonedata , updatefeedback, checktokenforfeedback, usersignup, userlogin, forgetpassword, resetpassword, verifypassword , customerget, customercreation,getitems, addpurchasedata, getpurchase};
