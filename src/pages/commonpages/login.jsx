@@ -31,7 +31,7 @@ const LoginForm = () => {
     if (data.code === 1) {
       localStorage.setItem("IsAuthenticated", "true");
       localStorage.setItem("UserToken",data.userwebtoken)
-      navigate('/home'); // Navigate after setting the authentication flag
+      navigate('/clientdash'); 
     }
   };
 

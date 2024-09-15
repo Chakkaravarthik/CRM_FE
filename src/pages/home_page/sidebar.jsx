@@ -32,7 +32,7 @@ const Sidebar = () => {
     return () => {
       sidebar.removeEventListener('scroll', handleScroll);
     };
-  }, [navigate]);
+  }, []);
 
   const handleMouseEnter = () => setIsExpanded(true);
   const handleMouseLeave = () => setIsExpanded(false);
@@ -43,22 +43,12 @@ const Sidebar = () => {
   };
 
   const renderActiveComponent = () => {
-    switch (location.pathname) {
-      case '/customerlist':
-        return <Customerlist />;
-      case '/purchaselist':
-        return <PurchaseList />;
-      case '/purchasefeedback':
-        return <Feedbacklist />;
-      case '/offerzone':
-        return <EmailSender />;
-      default:
-        return null;
-    }
+    
   };
 
   const logout = ()=>{
     localStorage.removeItem("IsAuthenticated")
+    localStorage.removeItem("UserToken")
     navigate('/login')
   }
 
@@ -78,7 +68,7 @@ const Sidebar = () => {
         />
 
         {/* Navigation links */}
-        <a href="/customerlist"  className="d-flex align-items-center">
+        <a href="/customerlist"  onClick={handleNavigation('/customerlist')} className="d-flex align-items-center">
           <span className="icon">
             <i className="bi bi-house"></i>
           </span>

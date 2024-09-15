@@ -30,7 +30,7 @@ const handlepurchaseform =()=>(e)=>{
         <table className="table table-hover">
           <thead style={{ backgroundColor: '#ff7f00', color: '#fff' }}>
             <tr>
-              <th scope="col">#</th>
+              <th scope="col">Purchase Id</th>
               <th scope="col">Customer Name</th>
               <th scope="col">Date</th>
               <th scope="col">Item</th>
@@ -43,7 +43,7 @@ const handlepurchaseform =()=>(e)=>{
           <tbody>
             {purchases.map((purchase, index) => (
               <tr key={purchase.purchase_id} style={{ color: '#333' }}>
-                <th scope="row">{index + 1}</th>
+                <td >{purchase.purchase_id}</td>
                 <td>{purchase.CustomerName}</td>
                 <td>{new Date(purchase.date).toLocaleDateString()}</td>
                 <td>{purchase.items.name}</td>

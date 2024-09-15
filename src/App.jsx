@@ -13,63 +13,64 @@ import CustomerDashboard from './pages/dashboard/customerdashboard';
 import EmailSender from './pages/offsers/emailsending';
 import Feedbacklist from './pages/modules/feedback/feedbacklist';
 import Dashboard from './pages/dashboard/generaldashboard';
-import { jwtDecode } from "jwt-decode"
+import {jwtDecode} from "jwt-decode"; 
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(Boolean(localStorage.getItem("IsAuthenticated")));
-  const [IsAdmin, setIsAdmin]= useState(false)
-  
+  const [IsAdmin, setIsAdmin]= useState(false);
 
   // Update authentication status if it changes in localStorage
   useEffect(() => {
     const checkAuth = () => setIsAuthenticated(Boolean(localStorage.getItem("IsAuthenticated")));
     window.addEventListener('storage', checkAuth);
     return () => window.removeEventListener('storage', checkAuth);
-
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     const usertoken = localStorage.getItem("UserToken");
-    if(usertoken){
+    if (usertoken) {
       const userdetails = jwtDecode(usertoken);
-      if(userdetails.role=="admin"){
+      if (userdetails.role === "admin") {
         setIsAdmin(true);
       }
     }
-    
-  },[])
+  }, []);
 
   return (
     <BrowserRouter>
-      {isAuthenticated && <Sidebar />}  
+      {isAuthenticated && <Sidebar />}
       <Routes>
+        
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/forgetpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/purchasefeedbackcustomer" element={<Feedback />} />
-        <Route path="/clientdash" element={<CustomerDashboard/>} />
-
+        
+      
         {isAuthenticated ? (
           <>
-          {IsAdmin && <CustomerDashboard/> }
+          <Route path="/clientdash" element={<CustomerDashboard />} />
             {IsAdmin ? (
               <>
-              <Route path="/customerform" element={<CustomerForm />} />
-              <Route path="/purchaseform" element={<Purchaseform />} />
-              <Route path="/purchaselist" element={<PurchaseList />} />
-              <Route path="/purchasefeedback" element={<Feedbacklist />} />
-              <Route path="/customerlist" element={<Customerlist />} />
-              <Route path="/emailsender" element={<EmailSender />} />
-              <Route path="/dash" element={<Dashboard />} />
+                <Route path="/customerform" element={<CustomerForm />} />
+                <Route path="/purchaseform" element={<Purchaseform />} />
+                <Route path="/purchaselist" element={<PurchaseList />} />
+                <Route path="/purchasefeedback" element={<Feedbacklist />} />
+                <Route path="/customerlist" element={<Customerlist />} />
+                <Route path="/emailsender" element={<EmailSender />} />
+                <Route path="/dash" element={<Dashboard />} />
+                
+                
               </>
             ) : (
-              <Route path="*" element={<Navigate to="/clientdash"/>} />
+              // Redirect non-admins to client dashboard
+              <Route path="*" element={<Navigate to="/clientdash" />} />
             )}
-            
           </>
         ) : (
-          <Route path="*" element={<Navigate to="/login" />} />  
+          // Redirect unauthenticated users to login
+          <Route path="*" element={<Navigate to="/login" />} />
         )}
       </Routes>
     </BrowserRouter>

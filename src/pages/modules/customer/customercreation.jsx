@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { customercreation, updatecustomer } from '../../../apis/auth';
+import { useNavigate } from 'react-router-dom';
 
 const CustomerForm = ({customerdata, setShowEditModel,}) => {
   console.log(customerdata)
+  const navigate = useNavigate();
   const [customerData, setCustomerData] = useState(customerdata || {
     name: '',
     email: '',
@@ -67,6 +69,9 @@ const CustomerForm = ({customerdata, setShowEditModel,}) => {
       }
     }else{
       const data = await customercreation(customerData);
+      if(data.code ==1){
+        navigate('/customerlist')
+      }
     }
     
   };
