@@ -59,6 +59,7 @@
     font-size: 18px;
     transition: display 0.3s;
     color:black;
+    cursor: pointer;
   }
   
   .sidebar.expanded .text {

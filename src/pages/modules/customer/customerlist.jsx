@@ -21,7 +21,7 @@ const Customerlist = () => {
       setCustomers(data);
     };
     getCustomer(); // execute get customer
-  }, []);
+  }, [customers]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -33,7 +33,7 @@ const Customerlist = () => {
 
   const handleEditClick = (customerId) => {
     const selectedCustomer = customers.find((customer) => customer.id === customerId);
-    setCustomerData(selectedCustomer); // Update state with single customer object
+    setCustomerData(selectedCustomer); 
     setShowEditModel(true);
     
   };
@@ -106,7 +106,10 @@ const Customerlist = () => {
           </button>
         </div>
       </div>
-      <CustomerLista 
+      {showEditModel ? (
+        <CustomerForm customerdata={customerdata} setShowEditModel={setShowEditModel}/>
+      ):(
+        <CustomerLista 
         customers={customers} 
         onEdit={handleEditClick} 
         searchTerm={searchTerm} 
@@ -114,9 +117,7 @@ const Customerlist = () => {
         onSelect={handleSelectCustomer}
         selectedCustomers={selectedCustomers}
       />
-
-      {showEditModel && <CustomerForm customerdata={customerdata} setShowEditModel={setShowEditModel}/>}
-
+      )}
     </div>
   );
 };

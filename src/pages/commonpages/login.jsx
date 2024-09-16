@@ -2,20 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { userlogin } from '../../apis/auth.js';
 
-const LoginForm = () => {
+const LoginForm = ({setIsAuthenticated}) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
+  const [Isauth, setIsauth]= useState(false)
+
   const IsAuthenticated = Boolean(localStorage.getItem("IsAuthenticated"));
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (IsAuthenticated) {
-      navigate('/');
-    }
-  }, [IsAuthenticated]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,12 +28,13 @@ const LoginForm = () => {
     if (data.code === 1) {
       localStorage.setItem("IsAuthenticated", "true");
       localStorage.setItem("UserToken",data.userwebtoken)
-      navigate('/clientdash'); 
+      setIsAuthenticated(true)
+      navigate('/'); 
     }
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center min-vh-100">
+    <div className="container d-flex justify-content-center align-items-center min-vh-95">
       <div className="card" style={{ width: '24rem', borderColor: 'orange', borderWidth: '2px' }}>
         <div className="card-body">
           <div className="text-center mb-4">
@@ -78,8 +76,8 @@ const LoginForm = () => {
             >
               Login
             </button>
-            <div className="btn btn-link w-100" style={{ backgroundColor: 'grey' }}>
-              <Link to='/register'>Register</Link> | <Link to='/forgetpassword'>Forget Password</Link>
+            <div className="btn btn-link w-100" style={{ border: 'grey', display:'flex', gap:'20px', alignItems:'center', justifyContent:'center'}}>
+              <a href='/register'>Register</a><a href='/forgetpassword'>Forget Password</a>
             </div>
           </form>
         </div>

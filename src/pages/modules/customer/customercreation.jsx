@@ -66,6 +66,7 @@ const CustomerForm = ({customerdata, setShowEditModel,}) => {
       const data1= await updatecustomer({editedCustomer:customerData,type:"edit"});
       if(data1.code==1){
         setShowEditModel(false)
+        setCustomerData(...customerData,data1.customer)
       }
     }else{
       const data = await customercreation(customerData);

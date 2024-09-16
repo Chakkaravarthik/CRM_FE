@@ -1,38 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../home_page/sidebar.css'; // Import the CSS file for styling
-import Customerlist from '../modules/customer/customerlist';
-import { PurchaseList } from '../modules/sales/purchase';
-import Feedbacklist from '../modules/feedback/feedbacklist';
-import EmailSender from '../offsers/emailsending';
 
-const Sidebar = () => {
+const Sidebar = ({ handleLogout }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [activeComponent, setActiveComponent] = useState(null);
   const navigate = useNavigate();
   const location = useLocation(); // To track current path for sidebar active state
 
   useEffect(() => {
-    const handleScroll = (event) => {
-      if (event.currentTarget.scrollTop > 0) {
-        setIsExpanded(true);
-      } else {
-        setIsExpanded(false);
-      }
-    };
-
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.addEventListener('scroll', handleScroll);
-
-    // Ensure the check runs every time the authentication status changes
-    if (!Boolean(localStorage.getItem("IsAuthenticated"))) {
+    // Automatically check and redirect to login if not authenticated
+    if (!Boolean(localStorage.getItem('IsAuthenticated'))) {
       navigate('/login');
     }
-
-    return () => {
-      sidebar.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  }, [navigate]);
 
   const handleMouseEnter = () => setIsExpanded(true);
   const handleMouseLeave = () => setIsExpanded(false);
@@ -42,16 +22,6 @@ const Sidebar = () => {
     navigate(path);
   };
 
-  const renderActiveComponent = () => {
-    
-  };
-
-  const logout = ()=>{
-    localStorage.removeItem("IsAuthenticated")
-    localStorage.removeItem("UserToken")
-    navigate('/login')
-  }
-
   return (
     <>
       <div
@@ -59,7 +29,7 @@ const Sidebar = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Logo at the top of the sidebar */}
+
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO9xMAd-PgVcWAQTQLxBcSUexZYm_q5-foLUpUuVjEWcWDzdKf3RJisrhiZ6il0kZz1ps&usqp=CAU"
           alt="Logo"
@@ -68,39 +38,65 @@ const Sidebar = () => {
         />
 
         {/* Navigation links */}
-        <a href="/customerlist"  onClick={handleNavigation('/customerlist')} className="d-flex align-items-center">
+        <a
+          onClick={handleNavigation('/clientdash')}
+          className={`d-flex align-items-center ${location.pathname === '/customerlist' ? 'active' : ''}`}
+        >
           <span className="icon">
             <i className="bi bi-house"></i>
           </span>
-          <span className="text">Customer</span>
+          <span className="text">Customer Detail</span>
         </a>
-        <a href="/purchaselist" onClick={handleNavigation('/purchaselist')} className="d-flex align-items-center">
+
+        <a
+          onClick={handleNavigation('/customerlist')}
+          className={`d-flex align-items-center ${location.pathname === '/customerlist' ? 'active' : ''}`}
+        >
+          <span className="icon">
+            <i className="bi bi-house"></i>
+          </span>
+          <span className="text">Customer List</span>
+        </a>
+
+        <a
+          onClick={handleNavigation('/purchaselist')}
+          className={`d-flex align-items-center ${location.pathname === '/purchaselist' ? 'active' : ''}`}
+        >
           <span className="icon">
             <i className="bi bi-info-circle"></i>
           </span>
           <span className="text">Purchase</span>
         </a>
-        <a href="/purchasefeedback" onClick={handleNavigation('/purchasefeedback')} className="d-flex align-items-center">
+
+        <a
+          onClick={handleNavigation('/purchasefeedback')}
+          className={`d-flex align-items-center ${location.pathname === '/purchasefeedback' ? 'active' : ''}`}
+        >
           <span className="icon">
-            <i className="bi bi-envelope-paper-fill" style={{ width: '5px', height: '5px' }}></i>
+            <i className="bi bi-envelope-paper-fill"></i>
           </span>
           <span className="text">Feedback</span>
         </a>
-        <a href="/emailsender" onClick={handleNavigation('/emailsender')} className="d-flex align-items-center">
+
+        <a
+          onClick={handleNavigation('/emailsender')}
+          className={`d-flex align-items-center ${location.pathname === '/emailsender' ? 'active' : ''}`}
+        >
           <span className="icon">
             <i className="bi bi-envelope"></i>
           </span>
           <span className="text">Offer Zone</span>
         </a>
+
+        {/* Logout button */}
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO9xMAd-PgVcWAQTQLxBcSUexZYm_q5-foLUpUuVjEWcWDzdKf3RJisrhiZ6il0kZz1ps&usqp=CAU"
           alt="Logout"
-          onClick={logout}
+          onClick={handleLogout}
           className="logo"
-          style={{ width: '40px', height: '40px' }}
+          style={{ width: '40px', height: '40px', cursor: 'pointer' }}
         />
       </div>
-      
     </>
   );
 };
