@@ -44,21 +44,18 @@ const App = () => {
   const handleLogout = () => {
     localStorage.removeItem('IsAuthenticated');
     localStorage.removeItem('UserToken');
-    setIsAuthenticated(false); // Clear authentication
-    setIsAdmin(false); // Clear admin status
+    setIsAuthenticated(false); 
+    setIsAdmin(false); 
   };
 
   return (
     <BrowserRouter>
       <Routes>
-        {/* Routes that don't require authentication */}
         <Route path="/login" element={<LoginForm setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/forgetpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/purchasefeedbackcustomer" element={<Feedback />} />
-
-        {/* Authenticated routes */}
         {isAuthenticated ? (
           <Route
             path="*"
