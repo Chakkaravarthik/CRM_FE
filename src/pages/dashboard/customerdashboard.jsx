@@ -6,6 +6,8 @@ const CustomerDashboard = () => {
   const [customer, setCustomer] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editedCustomer, setEditedCustomer] = useState({ ...customer });
+  const [user,setuser]= useState([]);
+  const [editeduser, setEditeduser] = useState({ ...user });
 
   useEffect(() => {
 
@@ -13,17 +15,30 @@ const CustomerDashboard = () => {
     
    const customerdata = async ()=>{
             const res = await customerget1({token:token});
-            const data = res.singleCustomerObj
-            setCustomer(data);
- } 
-    
+            if(res.code==1){
+              const data = res.singleCustomerObj;
+              setCustomer(data);
+            }
+            if(res.code==2){
+              const data = res.singleuserobj;
+              setuser(data);
+            }
+ }
+console.log(user)
 
     customerdata();
   }, []);
 
   const handleEdit = async () => {
-    console.log(editedCustomer)
     const dataupdate = await updatecustomer({editedCustomer,type:"edit"});
+    if(dataupdate.code==1){
+      setShowEditModal(false);
+      setCustomer(dataupdate.customer)
+    }
+  };
+
+  const handleUserEdit = async () => {
+    const dataupdate = await customercreation(editeduser);
     if(dataupdate.code==1){
       setShowEditModal(false);
       setCustomer(dataupdate.customer)
@@ -63,26 +78,8 @@ const CustomerDashboard = () => {
                 >
                   Edit
                 </button>
-          
-                <h3 className="mt-5 mb-4" style={{ color: '#333' }}>Purchase History</h3>
-                <table className="table table-striped table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Item</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(customer.purchase_history || []).map((purchase, index) => (
-                      <tr key={index}>
-                        <td>{purchase.date || ""}</td>
-                        <td>{purchase.items.name || ""}</td>
-                        <td>{purchase.total_amount || ""}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <Purchasehistory  customer={customer}/>
+
               </div>
           
               {/* Edit Modal */}
@@ -171,11 +168,64 @@ const CustomerDashboard = () => {
               {showEditModal && <div className="modal-backdrop fade show"></div>}
             </>
           ) : (
-            <h1>This User Is Not A Customer</h1>
-          )}
-        </div>
-      );
-      
-};
-
+          <>
+            <h1 className="mb-4" style={{ color: '#FF6F00' }}>Customer Dashboard</h1>
+            <div className="card p-4 shadow-sm" style={{ backgroundColor: '#F5F5F5' }}>
+              <h3 className="mb-4" style={{ color: '#333' }}>Basic Details</h3>
+              <dl className="row">
+                <dt className="col-sm-3">Name</dt>
+                <dd className="col-sm-9">{user.name}</dd>
+                <dt className="col-sm-3">Email</dt>
+                <dd className="col-sm-9">{user.email}</dd>
+              </dl>
+              {user.role=='admin' ? (
+                <button className="btn btn-warning">
+                This page is intended to display customer purchase information; however, your current role is set to admin.  
+              </button>
+              ):(
+                <button className="btn btn-warning">
+                You are currently registered as a user, but no purchases have been recorded under your account. If you are an existing customer who has made a purchase, please contact our staff for assistance.
+              </button>
+              )}
+            </div>
+          </>
+        )}
+        </div> 
+    )
+  }
 export default CustomerDashboard;
+
+
+const Purchasehistory = ({customer}) => {
+  return (
+    <>
+      {customer ? (
+        <>
+        <h3 className="mt-5 mb-4" style={{ color: '#333' }}>Purchase History</h3>
+        <table className="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Item</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {(customer.purchase_history || []).map((purchase, index) => (
+              <tr key={index}>
+                <td>{purchase.date || ""}</td>
+                <td>{purchase.items.name || ""}</td>
+                <td>{purchase.total_amount || ""}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </>
+      ) : (
+        <h2 style={{display:'flex', textAlign:'center'} }>No purchase History</h2>
+      )}
+      
+    </>
+
+  )
+}
